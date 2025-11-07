@@ -1,0 +1,82 @@
+2025-11-07 15:58:42 | ERROR | agentic_workflow.main | Handled exception during workflow step
+Traceback (most recent call last):
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 14, in run
+    _ = 1 / 0  # Deliberate error
+        ~~^~~
+ZeroDivisionError: division by zero
+2025-11-07 16:52:25 | ERROR | agentic_workflow.main | Fatal error in pipeline execution
+Traceback (most recent call last):
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 201, in <module>
+    run_pipeline()
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 172, in run_pipeline
+    ingest_bundle = ingest_agent(docs)
+                    ^^^^^^^^^^^^^^^^^^
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 68, in ingest_agent
+    dim = embs.shape[1]
+          ~~~~~~~~~~^^^
+IndexError: tuple index out of range
+2025-11-07 16:52:25 | ERROR | agentic_workflow | Uncaught exception
+Traceback (most recent call last):
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 201, in <module>
+    run_pipeline()
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 172, in run_pipeline
+    ingest_bundle = ingest_agent(docs)
+                    ^^^^^^^^^^^^^^^^^^
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 68, in ingest_agent
+    dim = embs.shape[1]
+          ~~~~~~~~~~^^^
+IndexError: tuple index out of range
+2025-11-07 17:12:46 | ERROR | agentic_workflow.main | Fatal error in pipeline execution
+Traceback (most recent call last):
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 198, in <module>
+    run_pipeline()
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 173, in run_pipeline
+    summ = summarizer_agent(llm, docs, faiss_bundle=ingest_bundle)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 117, in summarizer_agent
+    output = chain.invoke({"doc_list": doc_list}).content
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3088, in invoke
+    input_ = context.run(step.invoke, input_, config, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 211, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\base.py", line 2021, in _call_with_config
+    context.run(
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\config.py", line 428, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 184, in _format_prompt_with_error_handling
+    inner_input_ = self._validate_input(inner_input)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 178, in _validate_input
+    raise KeyError(
+KeyError: "Input to ChatPromptTemplate is missing variables {'document'}.  Expected: ['document'] Received: ['doc_list']\nNote: if you intended {document} to be part of the string and not a variable, please escape it with double curly braces like: '{{document}}'.\nFor troubleshooting, visit: https://docs.langchain.com/oss/python/langchain/errors/INVALID_PROMPT_INPUT "
+2025-11-07 17:12:46 | ERROR | agentic_workflow | Uncaught exception
+Traceback (most recent call last):
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 198, in <module>
+    run_pipeline()
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 173, in run_pipeline
+    summ = summarizer_agent(llm, docs, faiss_bundle=ingest_bundle)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "g:\Ongoing Project\Agentic Workflow\main.py", line 117, in summarizer_agent
+    output = chain.invoke({"doc_list": doc_list}).content
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3088, in invoke
+    input_ = context.run(step.invoke, input_, config, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 211, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\base.py", line 2021, in _call_with_config
+    context.run(
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\runnables\config.py", line 428, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 184, in _format_prompt_with_error_handling
+    inner_input_ = self._validate_input(inner_input)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\Ongoing Project\Agentic Workflow\venv\Lib\site-packages\langchain_core\prompts\base.py", line 178, in _validate_input
+    raise KeyError(
+KeyError: "Input to ChatPromptTemplate is missing variables {'document'}.  Expected: ['document'] Received: ['doc_list']\nNote: if you intended {document} to be part of the string and not a variable, please escape it with double curly braces like: '{{document}}'.\nFor troubleshooting, visit: https://docs.langchain.com/oss/python/langchain/errors/INVALID_PROMPT_INPUT "
