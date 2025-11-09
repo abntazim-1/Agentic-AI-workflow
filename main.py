@@ -13,8 +13,9 @@ Requires: Ollama (daemon running + model pulled), LangChain, langchain-ollama
 """
 
 import os
+import time
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 from logging_config import get_logger
 
@@ -47,6 +48,91 @@ SUMMARIZER_MODEL = os.getenv("SUMMARIZER_MODEL", OLLAMA_MODEL)
 DECISION_MODEL = os.getenv("DECISION_MODEL", OLLAMA_MODEL)
 REPORTER_MODEL = os.getenv("REPORTER_MODEL", OLLAMA_MODEL)
 TEMPERATURE = float(os.getenv("TEMPERATURE", "0.2"))
+
+
+def format_duration(seconds: float) -> str:
+    """
+    Format duration in seconds to a human-readable string.
+    
+    Args:
+        seconds: Duration in seconds
+        
+    Returns:
+        Formatted duration string (e.g., "2.5s", "1m 30s", "2h 15m")
+    """
+    if seconds < 60:
+        return f"{seconds:.2f}s"
+    elif seconds < 3600:
+        minutes = int(seconds // 60)
+        secs = seconds % 60
+        return f"{minutes}m {secs:.2f}s"
+    else:
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        secs = seconds % 60
+        return f"{hours}h {minutes}m {secs:.2f}s"
+
+
+def run_workflow_with_timing(
+    data_dir: Optional[Path] = None,
+    output_dir: Optional[Path] = None,
+    summarizer_model: Optional[str] = None,
+    decision_model: Optional[str] = None,
+    reporter_model: Optional[str] = None,
+    temperature: float = 0.2,
+    report_filename: Optional[str] = None,
+    json_filename: Optional[str] = None
+) -> Tuple[bool, float]:
+    """
+    Run the complete agentic workflow pipeline with timing.
+    
+    Args:
+        data_dir: Directory containing input text files (default: DATA_DIR)
+        output_dir: Directory for output reports (default: OUTPUT_DIR)
+        summarizer_model: Model name for summarizer agent (default: SUMMARIZER_MODEL)
+        decision_model: Model name for decision agent (default: DECISION_MODEL)
+        reporter_model: Model name for reporter agent (default: REPORTER_MODEL)
+        temperature: Temperature setting for all agents (default: 0.2)
+        report_filename: Name of the text report file (default: REPORT_FILENAME)
+        json_filename: Name of the JSON report file (default: JSON_REPORT_FILENAME)
+        
+    Returns:
+        Tuple of (success: bool, duration: float) where duration is in seconds
+    """
+    start_time = time.time()
+    
+    logger.info("Starting workflow timing...")
+    print("\n" + "="*80)
+    print("WORKFLOW TIMING STARTED")
+    print("="*80)
+    
+    success = run_workflow(
+        data_dir=data_dir,
+        output_dir=output_dir,
+        summarizer_model=summarizer_model,
+        decision_model=decision_model,
+        reporter_model=reporter_model,
+        temperature=temperature,
+        report_filename=report_filename,
+        json_filename=json_filename
+    )
+    
+    end_time = time.time()
+    duration = end_time - start_time
+    
+    # Log and print timing information
+    logger.info("="*80)
+    logger.info(f"WORKFLOW TIMING: Total duration = {format_duration(duration)} ({duration:.2f} seconds)")
+    logger.info("="*80)
+    
+    print("\n" + "="*80)
+    print("WORKFLOW TIMING SUMMARY")
+    print("="*80)
+    print(f"Total Processing Time: {format_duration(duration)}")
+    print(f"Duration (seconds): {duration:.2f}s")
+    print("="*80)
+    
+    return success, duration
 
 
 def run_workflow(
@@ -277,8 +363,8 @@ def main():
     
     args = parser.parse_args()
     
-    # Run workflow
-    success = run_workflow(
+    # Run workflow with timing
+    success, duration = run_workflow_with_timing(
         data_dir=Path(args.data_dir) if args.data_dir else None,
         output_dir=Path(args.output_dir) if args.output_dir else None,
         summarizer_model=args.summarizer_model,

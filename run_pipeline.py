@@ -10,7 +10,7 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from main import run_workflow, DATA_DIR, OUTPUT_DIR
+from main import run_workflow_with_timing, DATA_DIR, OUTPUT_DIR
 from logging_config import get_logger
 
 logger = get_logger("run_pipeline")
@@ -207,9 +207,9 @@ def run():
     print(f"JSON filename:       {args['json_filename']}")
     print("="*70 + "\n")
     
-    # Run the workflow
+    # Run the workflow with timing
     try:
-        success = run_workflow(
+        success, duration = run_workflow_with_timing(
             data_dir=args['data_dir'],
             output_dir=args['output_dir'],
             summarizer_model=args['summarizer_model'],
